@@ -56,6 +56,8 @@ GEM
     execjs (2.7.0)
     faraday (0.15.3)
       multipart-post (>= 1.2, < 3)
+    faraday-http-cache (2.0.0)
+      faraday (~> 0.8)
     ffi (1.9.25)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -172,6 +174,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
+  faraday-http-cache
   listen (>= 3.0.5, < 3.2)
   octokit
   puma (~> 3.11)
@@ -185,7 +188,7 @@ DEPENDENCIES
   webpacker
 
 RUBY VERSION
-   ruby 2.6.0p-1
+   ruby 2.5.1p57
 
 BUNDLED WITH
    1.16.1
