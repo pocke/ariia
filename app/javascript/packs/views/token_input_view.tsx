@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Conn from '../state_connection';
+import {post} from '../api_client';
 
 interface Props {}
 interface State {
@@ -17,7 +18,8 @@ export class TokenInputView extends React.Component<Props, State> {
     this.setState({accessToken: event.target.value});
   }
 
-  onSubmit() {
+  async onSubmit() {
+    await post('/access_token', {access_token: this.state.accessToken});
     Conn.setState({accessToken: this.state.accessToken});
   }
 

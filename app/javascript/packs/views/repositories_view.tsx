@@ -6,7 +6,7 @@ interface Props {
   accessToken: string;
 }
 
-export class Repositories extends React.Component<Props> {
+export class RepositoriesView extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.state = {};
