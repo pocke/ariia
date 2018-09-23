@@ -8,7 +8,8 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "target": "es5",
-    "jsx": "react"
+    "jsx": "react",
+    "outDir": "tmp/ts/"
   },
   "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
   "compileOnSave": false
