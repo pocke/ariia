@@ -2,7 +2,9 @@
   "name": "ariia",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "3.5"
+    "@rails/webpacker": "3.5",
+    "ts-loader": "3.5.0",
+    "typescript": "^3.0.3"
   },
   "devDependencies": {
     "webpack-dev-server": "2.11.2"
