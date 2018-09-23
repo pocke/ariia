@@ -1,6 +1,6 @@
 const baseURL = location.origin + '/api';
 
-export const get = async (path: string) => {
+export const get = async (path: string): Promise<Response> => {
   const resp = await fetch(baseURL + path);
   if (!resp.ok) {
     throw await resp.text();

@@ -19,7 +19,7 @@ export class App extends React.Component<Props, State> {
   render() {
     const {accessToken} = this.state;
     return accessToken ? (
-      <RepositoriesView accessToken={accessToken} />
+      <RepositoriesView accessToken={accessToken} repos={this.state.repos} />
     ) : (
       <TokenInputView />
     );

@@ -1,7 +1,7 @@
 class Api::WatchedRepositoriesController < ApplicationController
   def index
-    client = Octokit.new(access_token: session[:access_token])
+    client = Octokit::Client.new(access_token: session[:access_token])
     repos = client.watched
-    render json: repos
+    render json: repos.map(&:to_h)
   end
 end

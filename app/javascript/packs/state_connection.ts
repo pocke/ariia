@@ -1,5 +1,8 @@
+import {Repository} from './octotypes';
+
 export interface State {
   accessToken?: string;
+  repos?: Repository[];
 }
 
 class Conn {
