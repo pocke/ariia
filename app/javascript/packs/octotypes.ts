@@ -4,6 +4,10 @@ export interface Repository {
   full_name: string;
   private: boolean;
   owner: User;
+  extend: {
+    subscribed: boolean;
+    action: 'create' | 'delete' | null;
+  };
 }
 
 export interface User {

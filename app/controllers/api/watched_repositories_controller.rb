@@ -4,6 +4,10 @@ class Api::WatchedRepositoriesController < ApplicationController
     repos = client.watched.map(&:to_h).map do |repo|
       {
         owner: repo[:owner].slice(:id, :login),
+        extend: {
+          subscribed: true,
+          action: nil,
+        },
         **repo.slice(:id, :name, :full_name, :private)
       }
     end
