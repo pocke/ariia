@@ -11,6 +11,8 @@ export class RepositoriesComponent extends React.Component<Props> {
   }
 
   render() {
-    return this.props.repos.map(repo => <div key={repo.id}>{repo.name}</div>);
+    return this.props.repos.map(repo => (
+      <div key={repo.id}>{repo.full_name}</div>
+    ));
   }
 }
