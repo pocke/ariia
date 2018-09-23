@@ -9,7 +9,8 @@
     "sourceMap": true,
     "target": "es5",
     "jsx": "react",
-    "outDir": "tmp/ts/"
+    "outDir": "tmp/ts/",
+    "noImplicitAny": true
   },
   "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
   "compileOnSave": false
