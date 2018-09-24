@@ -3,6 +3,7 @@ export interface Repository {
   name: string;
   full_name: string;
   private: boolean;
+  fork: boolean;
   html_url: string;
   owner: User;
   extend: {

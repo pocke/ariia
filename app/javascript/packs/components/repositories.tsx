@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {Repository} from '../octotypes';
 import Conn from '../state_connection';
+import {RepositoryRowComponent} from './repository_row';
 
 interface Props {
   repos: Repository[];
@@ -42,51 +43,32 @@ export class RepositoriesComponent extends React.Component<Props> {
     Conn.setState({repos});
   }
 
-  private renderActionButton(repo: Repository) {
-    switch (repo.extend.action) {
-      case 'delete':
-      case 'create':
-        return (
-          <button onClick={this.onClickCancel.bind(this, repo)}>Cancel</button>
-        );
-      case null:
-        return (
-          <button onClick={this.onClickUnsubscribe.bind(this, repo)}>
-            Unsubscribe
-          </button>
-        );
-      default:
-        throw `Unexpected value: ${repo.extend.action}`;
-    }
-  }
-
-  private renderActionStatus(repo: Repository) {
-    switch (repo.extend.action) {
-      case 'delete':
-        return '🚮';
-      case 'create':
-        return '👀';
-      case null:
-        return null;
-      default:
-        throw `Unexpected value: ${repo.extend.action}`;
-    }
-  }
-
   render() {
-    return this.props.repos.map(repo => (
-      <div key={repo.id}>
-        <img
-          src={repo.owner.avatar_url}
-          alt={`avatar for ${repo.owner.login}`}
-          style={{width: '1em', height: '1em'}}
-        />
-        <a href={repo.html_url} target="_blank">
-          {repo.full_name}
-        </a>
-        {this.renderActionButton(repo)}
-        {this.renderActionStatus(repo)}
-      </div>
-    ));
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Icon</th>
+            <th>Private</th>
+            <th>Fork</th>
+            <th>name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.repos.map(repo => (
+            <RepositoryRowComponent
+              key={repo.id}
+              repo={repo}
+              onClickUnsubscribe={(repo: Repository) =>
+                this.onClickUnsubscribe(repo)
+              }
+              onClickCancel={(repo: Repository) => this.onClickCancel(repo)}
+            />
+          ))}
+        </tbody>
+      </table>
+    );
   }
 }

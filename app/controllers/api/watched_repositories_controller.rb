@@ -8,7 +8,7 @@ class Api::WatchedRepositoriesController < ApplicationController
           subscribed: true,
           action: nil,
         },
-        **repo.slice(:id, :name, :full_name, :private, :html_url)
+        **repo.slice(:id, :name, :full_name, :private, :fork, :html_url)
       }
     end
 
