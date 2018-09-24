@@ -12,7 +12,20 @@ export class App extends React.Component<Props, State> {
     super(props);
     Conn.onSetState(this.setState.bind(this));
 
-    this.state = {};
+    this.state = {
+      filters: {
+        owner: '',
+        name: '',
+        visibility: {
+          private: true,
+          public: true,
+        },
+        fork: {
+          fork: true,
+          notFork: true,
+        },
+      },
+    };
   }
 
   async componentDidMount() {
@@ -26,7 +39,11 @@ export class App extends React.Component<Props, State> {
   render() {
     const {accessToken} = this.state;
     return accessToken ? (
-      <RepositoriesView accessToken={accessToken} repos={this.state.repos} />
+      <RepositoriesView
+        accessToken={accessToken}
+        repos={this.state.repos}
+        filters={this.state.filters}
+      />
     ) : (
       <TokenInputView />
     );

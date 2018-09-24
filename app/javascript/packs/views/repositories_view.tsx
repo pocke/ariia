@@ -1,13 +1,16 @@
 import * as React from 'react';
 
-import Conn from '../state_connection';
+import Conn, {Filters} from '../state_connection';
 import {get, del, post} from '../api_client';
 import {Repository} from '../octotypes';
 import {RepositoriesComponent} from '../components/repositories';
+import {FilterSettingComponent} from '../components/filter_setting';
+import {FilterComponent} from '../components/filter';
 
 interface Props {
   accessToken: string;
   repos?: Repository[];
+  filters: Filters;
 }
 
 export class RepositoriesView extends React.Component<Props> {
@@ -42,7 +45,13 @@ export class RepositoriesView extends React.Component<Props> {
   render() {
     return this.props.repos ? (
       <div>
-        <RepositoriesComponent repos={this.props.repos} />
+        <FilterSettingComponent filters={this.props.filters} />
+        <FilterComponent
+          repos={this.props.repos}
+          filters={this.props.filters}
+          renderChild={repos => <RepositoriesComponent repos={repos} />}
+        />
+
         <button onClick={this.onClickApply.bind(this)}>Apply</button>
         <button onClick={this.onClickSignOut.bind(this)}>Sign Out</button>
       </div>
