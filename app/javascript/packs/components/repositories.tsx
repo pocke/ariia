@@ -76,7 +76,14 @@ export class RepositoriesComponent extends React.Component<Props> {
   render() {
     return this.props.repos.map(repo => (
       <div key={repo.id}>
-        <span>{repo.full_name}</span>
+        <img
+          src={repo.owner.avatar_url}
+          alt={`avatar for ${repo.owner.login}`}
+          style={{width: '1em', height: '1em'}}
+        />
+        <a href={repo.html_url} target="_blank">
+          {repo.full_name}
+        </a>
         {this.renderActionButton(repo)}
         {this.renderActionStatus(repo)}
       </div>

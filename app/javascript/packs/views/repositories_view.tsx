@@ -34,11 +34,17 @@ export class RepositoriesView extends React.Component<Props> {
     await Promise.all(reqs);
   }
 
+  async onClickSignOut() {
+    await del('/access_token');
+    Conn.setState({accessToken: null});
+  }
+
   render() {
     return this.props.repos ? (
       <div>
         <RepositoriesComponent repos={this.props.repos} />
         <button onClick={this.onClickApply.bind(this)}>Apply</button>
+        <button onClick={this.onClickSignOut.bind(this)}>Sign Out</button>
       </div>
     ) : (
       <div>loading...</div>

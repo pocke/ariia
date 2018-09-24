@@ -9,4 +9,9 @@ class Api::AccessTokensController < ApplicationController
     session[:access_token] = token
     head :ok
   end
+
+  def destroy
+    session[:access_token] = nil
+    head :ok
+  end
 end

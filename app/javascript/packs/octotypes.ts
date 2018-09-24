@@ -3,6 +3,7 @@ export interface Repository {
   name: string;
   full_name: string;
   private: boolean;
+  html_url: string;
   owner: User;
   extend: {
     subscribed: boolean;
@@ -13,4 +14,5 @@ export interface Repository {
 export interface User {
   id: number;
   login: string;
+  avatar_url: string;
 }
