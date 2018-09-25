@@ -1,11 +1,16 @@
 import * as React from 'react';
 
-import Conn, {Filters} from '../state_connection';
-import {get, del, post} from '../api_client';
+import {Filters} from '../app';
 import {Repository} from '../octotypes';
 import {RepositoriesComponent} from '../components/repositories';
 import {FilterSettingComponent} from '../components/filter_setting';
 import {FilterComponent} from '../components/filter';
+import Store from '../store';
+import {
+  fetchWatchedRepositories,
+  signOut,
+  applySubscriptions,
+} from '../action_creator/root';
 
 interface Props {
   accessToken: string;
@@ -20,26 +25,15 @@ export class RepositoriesView extends React.Component<Props> {
   }
 
   async componentDidMount() {
-    const resp = await get('/watched_repositories');
-    const repos = await resp.json();
-    Conn.setState({repos});
+    Store.dispatch(await fetchWatchedRepositories());
   }
 
   async onClickApply() {
-    const reqs = this.props.repos
-      .filter(repo => repo.extend.action)
-      .map(
-        repo =>
-          repo.extend.action === 'delete'
-            ? del(`/watched_repositories/${repo.id}`)
-            : post(`/watched_repositories/${repo.id}`),
-      );
-    await Promise.all(reqs);
+    Store.dispatch(await applySubscriptions(this.props.repos));
   }
 
   async onClickSignOut() {
-    await del('/access_token');
-    Conn.setState({accessToken: null});
+    Store.dispatch(await signOut());
   }
 
   render() {

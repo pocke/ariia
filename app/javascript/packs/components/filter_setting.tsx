@@ -1,5 +1,12 @@
 import * as React from 'react';
-import Conn, {Filters} from '../state_connection';
+
+import {Filters} from '../app';
+import Store from '../store';
+import {
+  updateTextFilter,
+  updateForkFilter,
+  updateVisibilityFilter,
+} from '../action_creator/root';
 
 interface Props {
   filters: Filters;
@@ -8,33 +15,25 @@ interface Props {
 export class FilterSettingComponent extends React.Component<Props> {
   private handleChange(event: any) {
     const target = event.target;
-    const value = target.value;
     const name = target.name;
-
-    const newFilters = {
-      ...this.props.filters,
-      [name]: value,
-    };
-    Conn.setState({
-      filters: newFilters,
-    });
+    const value = target.value;
+    Store.dispatch(updateTextFilter(name, value));
   }
 
-  private handleChangeCheckbox(event: any) {
+  private handleChangeVisibility(event: any) {
     const target = event.target;
     const checked = target.checked;
-    const name = target.name.split('.');
+    const name = target.name;
 
-    const newFilters = {
-      ...this.props.filters,
-      [name[0]]: {
-        ...(this.props.filters as any)[name[0]],
-        [name[1]]: checked,
-      },
-    };
-    Conn.setState({
-      filters: newFilters,
-    });
+    Store.dispatch(updateVisibilityFilter(name, checked));
+  }
+
+  private handleChangeFork(event: any) {
+    const target = event.target;
+    const checked = target.checked;
+    const name = target.name;
+
+    Store.dispatch(updateForkFilter(name, checked));
   }
 
   render() {
@@ -47,18 +46,18 @@ export class FilterSettingComponent extends React.Component<Props> {
           Private
           <input
             type="checkbox"
-            name="visibility.private"
+            name="private"
             checked={this.props.filters.visibility.private}
-            onChange={(event: any) => this.handleChangeCheckbox(event)}
+            onChange={(event: any) => this.handleChangeVisibility(event)}
           />
         </label>
         <label>
           Public
           <input
             type="checkbox"
-            name="visibility.public"
+            name="public"
             checked={this.props.filters.visibility.public}
-            onChange={(event: any) => this.handleChangeCheckbox(event)}
+            onChange={(event: any) => this.handleChangeVisibility(event)}
           />
         </label>
 
@@ -67,18 +66,18 @@ export class FilterSettingComponent extends React.Component<Props> {
           Fork
           <input
             type="checkbox"
-            name="fork.fork"
+            name="fork"
             checked={this.props.filters.fork.fork}
-            onChange={(event: any) => this.handleChangeCheckbox(event)}
+            onChange={(event: any) => this.handleChangeFork(event)}
           />
         </label>
         <label>
           Not fork
           <input
             type="checkbox"
-            name="fork.notFork"
+            name="notFork"
             checked={this.props.filters.fork.notFork}
-            onChange={(event: any) => this.handleChangeCheckbox(event)}
+            onChange={(event: any) => this.handleChangeFork(event)}
           />
         </label>
 

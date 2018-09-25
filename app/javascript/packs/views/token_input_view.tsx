@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import Conn from '../state_connection';
-import {post} from '../api_client';
+import {updateAccessToken} from '../action_creator/root';
+import Store from '../store';
 
 interface Props {}
 interface State {
@@ -19,8 +19,7 @@ export class TokenInputView extends React.Component<Props, State> {
   }
 
   async onSubmit() {
-    await post('/access_token', {access_token: this.state.accessToken});
-    Conn.setState({accessToken: this.state.accessToken});
+    Store.dispatch(await updateAccessToken(this.state.accessToken));
   }
 
   render() {
