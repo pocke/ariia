@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Repository} from '../octotypes';
-import {Filters} from '../state_connection';
+import {Filters} from '../app';
 
 interface Props {
   repos: Repository[];
