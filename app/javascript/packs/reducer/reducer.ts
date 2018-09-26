@@ -8,6 +8,7 @@ import {
   ApplySubscriptions,
   MarkUnsubscribe,
   CancelMark,
+  MarkUnsubscribeAll,
   UpdateTextFilter,
   UpdateVisibilityFilter,
   UpdateForkFilter,
@@ -49,6 +50,16 @@ export default (currentState: State, action: ActionTypes): State => {
 
       const repos = [...(currentState.repos || [])].map(
         repo => (repo.id == newRepo.id ? newRepo : repo),
+      );
+      return {...currentState, repos};
+    }
+    case MarkUnsubscribeAll: {
+      const unsubscribeRepoIDs = action.repos.map(repo => repo.id);
+      const repos = currentState.repos.map(
+        repo =>
+          unsubscribeRepoIDs.includes(repo.id)
+            ? {...repo, extend: {...repo.extend, action: 'delete' as 'delete'}}
+            : repo,
       );
       return {...currentState, repos};
     }
