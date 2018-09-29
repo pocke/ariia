@@ -8,6 +8,7 @@ import {
   SignOut,
   ApplySubscriptions,
   MarkUnsubscribe,
+  MarkSubscribe,
   CancelMark,
   MarkUnsubscribeAll,
   UpdateTextFilter,
@@ -40,6 +41,20 @@ export default (currentState: State, action: ActionTypes): State => {
         extend: {
           ...action.repo.extend,
           action: 'delete' as 'delete',
+        },
+      };
+
+      const repos = [...(currentState.repos || [])].map(
+        repo => (repo.id == newRepo.id ? newRepo : repo),
+      );
+      return {...currentState, repos};
+    }
+    case MarkSubscribe: {
+      const newRepo = {
+        ...action.repo,
+        extend: {
+          ...action.repo.extend,
+          action: 'create' as 'create',
         },
       };
 

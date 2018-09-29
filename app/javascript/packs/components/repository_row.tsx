@@ -2,6 +2,8 @@ import * as React from 'react';
 import Octicon, {Lock, RepoForked} from '@githubprimer/octicons-react';
 
 import {Repository} from '../octotypes';
+import {markSubscribe} from '../action_creator/root';
+import Store from '../store';
 
 interface Props {
   repo: Repository;
@@ -10,6 +12,10 @@ interface Props {
 }
 
 export class RepositoryRowComponent extends React.Component<Props> {
+  private onClickSubscribe() {
+    Store.dispatch(markSubscribe(this.props.repo));
+  }
+
   private renderActionButton() {
     const {repo} = this.props;
 
@@ -20,11 +26,17 @@ export class RepositoryRowComponent extends React.Component<Props> {
           <button onClick={() => this.props.onClickCancel(repo)}>Cancel</button>
         );
       case null:
-        return (
-          <button onClick={() => this.props.onClickUnsubscribe(repo)}>
-            Unsubscribe
-          </button>
-        );
+        if (repo.extend.subscribed) {
+          return (
+            <button onClick={() => this.props.onClickUnsubscribe(repo)}>
+              Unsubscribe🚮
+            </button>
+          );
+        } else {
+          return (
+            <button onClick={() => this.onClickSubscribe()}>Subscribe👀</button>
+          );
+        }
       default:
         throw `Unexpected value: ${repo.extend.action}`;
     }

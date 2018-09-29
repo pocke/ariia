@@ -11,6 +11,7 @@ export const FetchRepositoriesByOrg = 'root.FetchRepositoriesByOrg';
 export const ApplySubscriptions = 'root.ApplySubscriptions';
 
 export const MarkUnsubscribe = 'root.MarkUnsubscribe';
+export const MarkSubscribe = 'root.MarkSubscribe';
 export const CancelMark = 'root.CancelMark';
 export const MarkUnsubscribeAll = 'root.MarkUnsubscribeAll';
 
@@ -52,6 +53,11 @@ interface MarkUnsubscribeT {
   repo: Repository;
 }
 
+interface MarkSubscribeT {
+  type: typeof MarkSubscribe;
+  repo: Repository;
+}
+
 interface CancelMarkT {
   type: typeof CancelMark;
   repo: Repository;
@@ -88,6 +94,7 @@ export type ActionTypes =
   | SignOutT
   | ApplySubscriptionsT
   | MarkUnsubscribeT
+  | MarkSubscribeT
   | CancelMarkT
   | MarkUnsubscribeAllT
   | UpdateTextFilterT
@@ -155,6 +162,13 @@ export const applySubscriptions = async (repos: Repository[]) => {
 export const markUnsubscribe = (repo: Repository) => {
   return {
     type: MarkUnsubscribe,
+    repo,
+  };
+};
+
+export const markSubscribe = (repo: Repository) => {
+  return {
+    type: MarkSubscribe,
     repo,
   };
 };
