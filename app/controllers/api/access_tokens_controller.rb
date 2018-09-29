@@ -6,6 +6,8 @@ class Api::AccessTokensController < ApplicationController
 
   def create
     token = params.require(:access_token)
+    client = OctokitFactory.new_client(access_token: token)
+    client.user # Validate token
     session[:access_token] = token
     head :ok
   end
