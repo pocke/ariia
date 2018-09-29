@@ -78,7 +78,9 @@ export default (currentState: State, action: ActionTypes): State => {
       return {...currentState, repos};
     }
     case MarkUnsubscribeAll: {
-      const unsubscribeRepoIDs = action.repos.map(repo => repo.id);
+      const unsubscribeRepoIDs = action.repos
+        .filter(repo => repo.extend.subscribed)
+        .map(repo => repo.id);
       const repos = currentState.repos.map(
         repo =>
           unsubscribeRepoIDs.includes(repo.id)
