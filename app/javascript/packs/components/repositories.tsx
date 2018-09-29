@@ -18,16 +18,8 @@ export class RepositoriesComponent extends React.Component<Props> {
     super(props);
   }
 
-  private onClickUnsubscribe(repo: Repository) {
-    Store.dispatch(markUnsubscribe(repo));
-  }
-
   private onClickUnsubscribeAll() {
     Store.dispatch(markUnsubscribeAll(this.props.repos));
-  }
-
-  private onClickCancel(repo: Repository) {
-    Store.dispatch(cancelMark(repo));
   }
 
   render() {
@@ -50,14 +42,7 @@ export class RepositoriesComponent extends React.Component<Props> {
         </thead>
         <tbody>
           {this.props.repos.map(repo => (
-            <RepositoryRowComponent
-              key={repo.id}
-              repo={repo}
-              onClickUnsubscribe={(repo: Repository) =>
-                this.onClickUnsubscribe(repo)
-              }
-              onClickCancel={(repo: Repository) => this.onClickCancel(repo)}
-            />
+            <RepositoryRowComponent key={repo.id} repo={repo} />
           ))}
         </tbody>
       </table>
