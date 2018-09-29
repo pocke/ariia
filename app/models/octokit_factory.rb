@@ -7,7 +7,9 @@ module OctokitFactory
       builder.use Octokit::Middleware::FollowRedirects
       builder.use Octokit::Response::RaiseError
       builder.use Octokit::Response::FeedParser
-      builder.response :logger
+      builder.response(:logger, Rails.logger) do |logger|
+        logger.filter(/token .{40}/, 'token [FILTERED]')
+      end
       builder.adapter Faraday.default_adapter
     end
 
