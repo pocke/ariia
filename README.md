@@ -1,24 +1,25 @@
-# README
+# ARIIA - GitHub watching repositories manager
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Development
 
-Things you may want to cover:
+### Requirements
 
-* Ruby version
+- Ruby 2.5.1
+- yarn
 
-* System dependencies
+### Installation
 
-* Configuration
+```
+$ git clone https://github.com/pocke/ariia
+$ bundle install
+$ yarn install
+```
 
-* Database creation
+### Start servers
 
-* Database initialization
+```
+$ bin/rails s
+$ bin/webpack-dev-server
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+And access to `http://localhost:3000`
