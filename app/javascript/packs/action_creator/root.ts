@@ -164,7 +164,7 @@ export const applySubscriptions = async (repos: Repository[]) => {
       repo =>
         repo.extend.action === 'delete'
           ? del(`/watched_repositories/${repo.id}`)
-          : post(`/watched_repositories/${repo.id}`),
+          : post(`/watched_repositories?id=${repo.id}`),
     );
   await Promise.all(reqs);
   return {
