@@ -6,6 +6,7 @@ export const UpdateAccessToken = 'root.UpdateAccessToken';
 export const SignOut = 'root.SignOut';
 
 export const FetchWatchedRepositories = 'root.FetchWatchedRepositories';
+export const FetchRepositoriesByOrg = 'root.FetchRepositoriesByOrg';
 
 export const ApplySubscriptions = 'root.ApplySubscriptions';
 
@@ -33,6 +34,11 @@ interface SignOutT {
 
 interface FetchWatchedRepositoriesT {
   type: typeof FetchWatchedRepositories;
+  repos: Repository[];
+}
+
+interface FetchRepositoriesByOrgT {
+  type: typeof FetchRepositoriesByOrg;
   repos: Repository[];
 }
 
@@ -78,6 +84,7 @@ export type ActionTypes =
   | FetchAccessTokenT
   | UpdateAccessTokenT
   | FetchWatchedRepositoriesT
+  | FetchRepositoriesByOrgT
   | SignOutT
   | ApplySubscriptionsT
   | MarkUnsubscribeT
@@ -116,6 +123,15 @@ export const fetchWatchedRepositories = async () => {
   const repos = await resp.json();
   return {
     type: FetchWatchedRepositories,
+    repos,
+  };
+};
+
+export const fetchRepositoriesByOrg = async (name: string) => {
+  const resp = await get(`/repositories?user_or_org_name=${name}`);
+  const repos = await resp.json();
+  return {
+    type: FetchRepositoriesByOrg,
     repos,
   };
 };

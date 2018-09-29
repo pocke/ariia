@@ -48,7 +48,11 @@ export class RepositoryRowComponent extends React.Component<Props> {
   render() {
     const {repo} = this.props;
     return (
-      <tr key={repo.id}>
+      <tr
+        key={repo.id}
+        style={{
+          backgroundColor: repo.extend.subscribed ? 'white' : 'lightgray',
+        }}>
         <td>{this.renderActionStatus()}</td>
         <td>
           <img

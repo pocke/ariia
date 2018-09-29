@@ -14,7 +14,7 @@ class Api::RepositoriesController < ApplicationController
         raise "#{user.type} is unknown type. user: #{user}"
       end
 
-    repositories = repositories.map { |repo| format_repository(repo, subscribed: nil) }
+    repositories = repositories.map { |repo| format_repository(repo, subscribed: false) }
     render json: repositories
   end
 end

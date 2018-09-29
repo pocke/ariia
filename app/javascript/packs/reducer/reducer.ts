@@ -4,6 +4,7 @@ import {
   FetchAccessToken,
   UpdateAccessToken,
   FetchWatchedRepositories,
+  FetchRepositoriesByOrg,
   SignOut,
   ApplySubscriptions,
   MarkUnsubscribe,
@@ -23,6 +24,14 @@ export default (currentState: State, action: ActionTypes): State => {
       return {...currentState, accessToken: null};
     case FetchWatchedRepositories:
       return {...currentState, repos: action.repos};
+    case FetchRepositoriesByOrg: {
+      const currentRepos = currentState.repos;
+      const newRepos = action.repos
+        .map(repo => (currentRepos.find(r => r.id === repo.id) ? null : repo))
+        .filter(repo => repo);
+      const repos = currentState.repos.concat(newRepos);
+      return {...currentState, repos};
+    }
     case ApplySubscriptions:
       return currentState;
     case MarkUnsubscribe: {
