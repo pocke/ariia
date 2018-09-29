@@ -4,8 +4,8 @@ import {Repository} from '../octotypes';
 import {RepositoryRowComponent} from './repository_row';
 import Store from '../store';
 import {
-  markUnsubscribe,
-  cancelMark,
+  cancelMarkAll,
+  markSubscribeAll,
   markUnsubscribeAll,
 } from '../action_creator/root';
 
@@ -22,6 +22,14 @@ export class RepositoriesComponent extends React.Component<Props> {
     Store.dispatch(markUnsubscribeAll(this.props.repos));
   }
 
+  private onClickSubscribeAll() {
+    Store.dispatch(markSubscribeAll(this.props.repos));
+  }
+
+  private onClickCancelAll() {
+    Store.dispatch(cancelMarkAll(this.props.repos));
+  }
+
   render() {
     return (
       <table>
@@ -36,6 +44,12 @@ export class RepositoriesComponent extends React.Component<Props> {
               Actions
               <button onClick={() => this.onClickUnsubscribeAll()}>
                 Unsubscribe All
+              </button>
+              <button onClick={() => this.onClickSubscribeAll()}>
+                Subscribe All
+              </button>
+              <button onClick={() => this.onClickCancelAll()}>
+                Cancel All
               </button>
             </th>
           </tr>

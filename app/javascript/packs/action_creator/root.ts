@@ -14,6 +14,8 @@ export const MarkUnsubscribe = 'root.MarkUnsubscribe';
 export const MarkSubscribe = 'root.MarkSubscribe';
 export const CancelMark = 'root.CancelMark';
 export const MarkUnsubscribeAll = 'root.MarkUnsubscribeAll';
+export const MarkSubscribeAll = 'root.MarkSubscribeAll';
+export const CancelMarkAll = 'root.CancelAll';
 
 export const UpdateTextFilter = 'root.UpdateTextFilter';
 export const UpdateVisibilityFilter = 'root.UpdateVisibilityFilter';
@@ -68,6 +70,16 @@ interface MarkUnsubscribeAllT {
   repos: Repository[];
 }
 
+interface MarkSubscribeAllT {
+  type: typeof MarkSubscribeAll;
+  repos: Repository[];
+}
+
+interface CancelMarkAllT {
+  type: typeof CancelMarkAll;
+  repos: Repository[];
+}
+
 interface UpdateTextFilterT {
   type: typeof UpdateTextFilter;
   key: string;
@@ -97,6 +109,8 @@ export type ActionTypes =
   | MarkSubscribeT
   | CancelMarkT
   | MarkUnsubscribeAllT
+  | MarkSubscribeAllT
+  | CancelMarkAllT
   | UpdateTextFilterT
   | UpdateVisibilityFilterT
   | UpdateForkFilterT;
@@ -183,6 +197,20 @@ export const cancelMark = (repo: Repository) => {
 export const markUnsubscribeAll = (repos: Repository[]) => {
   return {
     type: MarkUnsubscribeAll,
+    repos,
+  };
+};
+
+export const markSubscribeAll = (repos: Repository[]) => {
+  return {
+    type: MarkSubscribeAll,
+    repos,
+  };
+};
+
+export const cancelMarkAll = (repos: Repository[]) => {
+  return {
+    type: CancelMarkAll,
     repos,
   };
 };

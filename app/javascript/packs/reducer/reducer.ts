@@ -11,6 +11,8 @@ import {
   MarkSubscribe,
   CancelMark,
   MarkUnsubscribeAll,
+  MarkSubscribeAll,
+  CancelMarkAll,
   UpdateTextFilter,
   UpdateVisibilityFilter,
   UpdateForkFilter,
@@ -85,6 +87,28 @@ export default (currentState: State, action: ActionTypes): State => {
         repo =>
           unsubscribeRepoIDs.includes(repo.id)
             ? {...repo, extend: {...repo.extend, action: 'delete' as 'delete'}}
+            : repo,
+      );
+      return {...currentState, repos};
+    }
+    case MarkSubscribeAll: {
+      const subscribeRepoIDs = action.repos
+        .filter(repo => !repo.extend.subscribed)
+        .map(repo => repo.id);
+      const repos = currentState.repos.map(
+        repo =>
+          subscribeRepoIDs.includes(repo.id)
+            ? {...repo, extend: {...repo.extend, action: 'create' as 'create'}}
+            : repo,
+      );
+      return {...currentState, repos};
+    }
+    case CancelMarkAll: {
+      const unsubscribeRepoIDs = action.repos.map(repo => repo.id);
+      const repos = currentState.repos.map(
+        repo =>
+          unsubscribeRepoIDs.includes(repo.id)
+            ? {...repo, extend: {...repo.extend, action: null as null}}
             : repo,
       );
       return {...currentState, repos};
