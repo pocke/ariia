@@ -6,7 +6,9 @@ import {
   FetchWatchedRepositories,
   FetchRepositoriesByOrg,
   SignOut,
-  ApplySubscriptions,
+  ApplySubscription,
+  StartApplySubscriptions,
+  FinishApplySubscriptions,
   MarkUnsubscribe,
   MarkSubscribe,
   CancelMark,
@@ -35,8 +37,33 @@ export default (currentState: State, action: ActionTypes): State => {
       const repos = currentState.repos.concat(newRepos);
       return {...currentState, repos};
     }
-    case ApplySubscriptions:
-      return currentState;
+    case ApplySubscription: {
+      const message = `[${
+        action.ok ? 'SUCCESS' : `FAILED: ${action.status}`
+      }] Make ${action.repo.full_name} ${
+        action.repo.extend.action === 'delete' ? 'unsubscribe' : 'subscribe'
+      }`;
+      const ok = action.ok;
+      return {
+        ...currentState,
+        logs: [...currentState.logs, {message, ok}],
+      };
+    }
+
+    case StartApplySubscriptions: {
+      const message = `Start applying ${action.count} subscriptions`;
+      return {
+        ...currentState,
+        logs: [...currentState.logs, {message, ok: true}],
+      };
+    }
+    case FinishApplySubscriptions: {
+      const message = `Finish applying subscriptions`;
+      return {
+        ...currentState,
+        logs: [...currentState.logs, {message, ok: true}],
+      };
+    }
     case MarkUnsubscribe: {
       const newRepo = {
         ...action.repo,

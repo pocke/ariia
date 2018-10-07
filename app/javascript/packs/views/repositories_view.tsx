@@ -6,17 +6,21 @@ import {RepositoriesComponent} from '../components/repositories';
 import {FilterSettingComponent} from '../components/filter_setting';
 import {FilterComponent} from '../components/filter';
 import {FetchRepositoriesComponent} from '../components/fetch_repositories';
+import {LogComponent} from '../components/log';
 import Store from '../store';
 import {
   fetchWatchedRepositories,
   signOut,
-  applySubscriptions,
+  startApplySubscriptions,
+  finishApplySubscriptions,
+  applySubscription,
 } from '../action_creator/root';
 
 interface Props {
   accessToken: string;
   repos?: Repository[];
   filters: Filters;
+  logs: {message: string; ok: boolean}[];
 }
 
 export class RepositoriesView extends React.Component<Props> {
@@ -30,7 +34,13 @@ export class RepositoriesView extends React.Component<Props> {
   }
 
   async onClickApply() {
-    Store.dispatch(await applySubscriptions(this.props.repos));
+    const repos = this.props.repos.filter(repo => repo.extend.action);
+
+    Store.dispatch(await startApplySubscriptions(repos));
+    await Promise.all(
+      repos.map(async repo => Store.dispatch(await applySubscription(repo))),
+    );
+    Store.dispatch(await finishApplySubscriptions());
   }
 
   async onClickSignOut() {
@@ -40,6 +50,7 @@ export class RepositoriesView extends React.Component<Props> {
   render() {
     return this.props.repos ? (
       <div>
+        <LogComponent logs={this.props.logs} />
         <FetchRepositoriesComponent />
         <FilterSettingComponent filters={this.props.filters} />
         <FilterComponent

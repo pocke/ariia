@@ -26,6 +26,7 @@ export interface State {
   accessToken?: string;
   repos?: Repository[];
   filters: Filters;
+  logs: {message: string; ok: boolean}[];
 }
 
 export class App extends React.Component<Props, State> {
@@ -45,6 +46,7 @@ export class App extends React.Component<Props, State> {
           notFork: true,
         },
       },
+      logs: [],
     };
     Store.setInitialState(this.state);
   }
@@ -63,6 +65,7 @@ export class App extends React.Component<Props, State> {
             accessToken={accessToken}
             repos={this.state.repos}
             filters={this.state.filters}
+            logs={this.state.logs}
           />
         ) : (
           <TokenInputView />

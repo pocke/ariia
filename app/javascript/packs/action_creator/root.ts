@@ -8,7 +8,9 @@ export const SignOut = 'root.SignOut';
 export const FetchWatchedRepositories = 'root.FetchWatchedRepositories';
 export const FetchRepositoriesByOrg = 'root.FetchRepositoriesByOrg';
 
-export const ApplySubscriptions = 'root.ApplySubscriptions';
+export const ApplySubscription = 'root.ApplySubscription';
+export const StartApplySubscriptions = 'root.StartApplySubscriptions';
+export const FinishApplySubscriptions = 'root.FinishApplySubscriptions';
 
 export const MarkUnsubscribe = 'root.MarkUnsubscribe';
 export const MarkSubscribe = 'root.MarkSubscribe';
@@ -45,9 +47,20 @@ interface FetchRepositoriesByOrgT {
   repos: Repository[];
 }
 
-interface ApplySubscriptionsT {
-  type: typeof ApplySubscriptions;
-  repos: Repository[];
+interface ApplySubscriptionT {
+  type: typeof ApplySubscription;
+  repo: Repository;
+  status: number;
+  ok: boolean;
+}
+
+interface StartApplySubscriptionsT {
+  type: typeof StartApplySubscriptions;
+  count: number;
+}
+
+interface FinishApplySubscriptionsT {
+  type: typeof FinishApplySubscriptions;
 }
 
 interface MarkUnsubscribeT {
@@ -104,7 +117,9 @@ export type ActionTypes =
   | FetchWatchedRepositoriesT
   | FetchRepositoriesByOrgT
   | SignOutT
-  | ApplySubscriptionsT
+  | ApplySubscriptionT
+  | StartApplySubscriptionsT
+  | FinishApplySubscriptionsT
   | MarkUnsubscribeT
   | MarkSubscribeT
   | CancelMarkT
@@ -157,19 +172,31 @@ export const fetchRepositoriesByOrg = async (name: string) => {
   };
 };
 
-export const applySubscriptions = async (repos: Repository[]) => {
-  const reqs = repos
-    .filter(repo => repo.extend.action)
-    .map(
-      repo =>
-        repo.extend.action === 'delete'
-          ? del(`/watched_repositories/${repo.id}`)
-          : post(`/watched_repositories?id=${repo.id}`),
-    );
-  await Promise.all(reqs);
+export const applySubscription = async (repo: Repository) => {
+  const resp =
+    repo.extend.action === 'delete'
+      ? await del(`/watched_repositories/${repo.id}`)
+      : await post(`/watched_repositories?id=${repo.id}`);
+
   return {
-    type: ApplySubscriptions,
-    repos,
+    type: ApplySubscription,
+    repo,
+    status: resp.status,
+    ok: resp.ok,
+  };
+};
+
+export const startApplySubscriptions = (repos: Repository[]) => {
+  const count = repos.filter(repo => repo.extend.action).length;
+  return {
+    type: StartApplySubscriptions,
+    count,
+  };
+};
+
+export const finishApplySubscriptions = () => {
+  return {
+    type: FinishApplySubscriptions,
   };
 };
 
