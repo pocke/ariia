@@ -39,8 +39,6 @@ export class FilterSettingComponent extends React.Component<Props> {
   render() {
     return (
       <div>
-        <h3>Filters</h3>
-
         <h4>Visibility</h4>
         <label>
           Private

@@ -14,16 +14,13 @@ export class LogComponent extends React.Component<Props, State> {
 
   render() {
     return (
-      <div>
-        <h4>Logs</h4>
-        <pre style={{backgroundColor: 'lightgray'}}>
-          {this.props.logs.map(log => (
-            <code style={{color: log.ok ? 'black' : 'red'}}>
-              {log.message + '\n'}
-            </code>
-          ))}
-        </pre>
-      </div>
+      <pre style={{backgroundColor: 'lightgray'}}>
+        {this.props.logs.map(log => (
+          <code style={{color: log.ok ? 'black' : 'red'}}>
+            {log.message + '\n'}
+          </code>
+        ))}
+      </pre>
     );
   }
 }

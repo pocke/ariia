@@ -7,6 +7,7 @@ import {FilterSettingComponent} from '../components/filter_setting';
 import {FilterComponent} from '../components/filter';
 import {FetchRepositoriesComponent} from '../components/fetch_repositories';
 import {LogComponent} from '../components/log';
+import {FoldComponent} from '../components/fold';
 import Store from '../store';
 import {
   fetchWatchedRepositories,
@@ -50,17 +51,39 @@ export class RepositoriesView extends React.Component<Props> {
   render() {
     return this.props.repos ? (
       <div>
-        <LogComponent logs={this.props.logs} />
-        <FetchRepositoriesComponent />
-        <FilterSettingComponent filters={this.props.filters} />
+        <FoldComponent
+          renderBody={() => <LogComponent logs={this.props.logs} />}
+          initialFolding={false}
+          header="log"
+        />
+        <FoldComponent
+          renderBody={() => <FetchRepositoriesComponent />}
+          initialFolding={false}
+          header="Fetch new repositories"
+        />
+        <FoldComponent
+          renderBody={() => (
+            <FilterSettingComponent filters={this.props.filters} />
+          )}
+          initialFolding={false}
+          header="Filters"
+        />
+
+        <div>
+          <button onClick={this.onClickApply.bind(this)}>
+            Apply all subscription updates
+          </button>
+          &nbsp;
+          <button onClick={this.onClickSignOut.bind(this)}>Sign Out</button>
+        </div>
+
+        <h3>Repositories</h3>
+
         <FilterComponent
           repos={this.props.repos}
           filters={this.props.filters}
           renderChild={repos => <RepositoriesComponent repos={repos} />}
         />
-
-        <button onClick={this.onClickApply.bind(this)}>Apply</button>
-        <button onClick={this.onClickSignOut.bind(this)}>Sign Out</button>
       </div>
     ) : (
       <div>loading...</div>

@@ -28,7 +28,6 @@ export class FetchRepositoriesComponent extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        <h4>Fetch new repositories</h4>
         <label>
           User or organization name:
           <input
