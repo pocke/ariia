@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@githubprimer/octicons-react@^8.1.0":
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/@githubprimer/octicons-react/-/octicons-react-8.1.0.tgz#731c40b6b231dcee731f0f2d37c67e7ee857bd6a"
+"@githubprimer/octicons-react@^8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@githubprimer/octicons-react/-/octicons-react-8.1.2.tgz#201ba2fb69c8ccc9b8b1c9ef67df68a2ab43bbcc"
   dependencies:
     prop-types "^15.6.1"
 
