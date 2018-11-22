@@ -11,7 +11,7 @@
     "ts-loader": "3.5.0",
     "typescript": "^3.1.6",
     "@types/react": "^16.7.4",
-    "@types/react-dom": "^16.0.9"
+    "@types/react-dom": "^16.0.10"
   },
   "devDependencies": {
     "prettier": "^1.15.2",
