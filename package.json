@@ -2,7 +2,7 @@
   "name": "ariia",
   "private": true,
   "dependencies": {
-    "@githubprimer/octicons-react": "^8.1.0",
+    "@githubprimer/octicons-react": "^8.2.0",
     "@rails/webpacker": "3.5",
     "babel-preset-react": "^6.24.1",
     "prop-types": "^15.6.2",
