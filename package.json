@@ -8,7 +8,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "ts-loader": "3.5.0",
+    "ts-loader": "5.4.3",
     "typescript": "^3.2.4",
     "@types/react": "^16.7.22",
     "@types/react-dom": "^16.0.11"
