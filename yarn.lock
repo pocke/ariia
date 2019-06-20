@@ -50,9 +50,9 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.7.22":
-  version "16.7.22"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.7.22.tgz#5bc6d166d5ac34b835756f0b736c7b1af0043e81"
+"@types/react@*", "@types/react@^16.8.21":
+  version "16.8.21"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.21.tgz#aefb32519a4111964993be5b2bd3f172f81c34ff"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
